@@ -29,4 +29,6 @@ https://github.com/rudeboybert/JSE_OkCupid/blob/master/profiles.csv.zip
 
 10) You have now saved all files used to analyze data for the Tableau Dashboard.
 
-11) I may be adding files for machine learning models to predict categorical information about users based on their essay text.  Please watch for updates.
+11) Run custom_word_finder.ipynb to analyze user essays and compute stats for those users who mention any word in the English language.
+
+12) I may be adding files for machine learning models to predict categorical information about users based on their essay text.  Please watch for updates.
