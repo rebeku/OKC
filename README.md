@@ -13,7 +13,7 @@ https://github.com/rudeboybert/JSE_OkCupid/blob/master/profiles.csv.zip
 
 3) Run code/Feature_Processing.ipynb to perform some preliminary processing on essay texts.
 
-4) Make FAVES 
+4) Run faves.ipynb to analyze user essays and extract titles and counts of popular books, bands, movies, television shows, and food, and save them to a new .csv file.
 
 5) Run code/Feature_importance_efficienter.ipynb to analyze word frequency for different demographic groups.
 
