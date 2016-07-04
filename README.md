@@ -25,6 +25,8 @@ https://github.com/rudeboybert/JSE_OkCupid/blob/master/profiles.csv.zip
 8) Run faves.py (created in step 7) in your terminal
 ```python faves.py```
 
-9) You have now saved all files used to analyze data for the Tableau Dashboard.
+9) Run correlations_by_feature.ipynb to save some exploratory data analysis on the relationships between categoricals in the dataset
 
-10) I may be adding files for machine learning models to predict categorical information about users based on their essay text.  Please watch for updates.
+10) You have now saved all files used to analyze data for the Tableau Dashboard.
+
+11) I may be adding files for machine learning models to predict categorical information about users based on their essay text.  Please watch for updates.
