@@ -99,14 +99,14 @@ df.sort_values('diff', inplace=True)
 
 # In[17]:
 
-# Save top 50 words for women and men for report
+# Save top 100 words for women and men for report
 women_list = ''
 for word in df.index[:50]:
     women_list = women_list + word + ', '
     
 men_list = ''
 # Write men_list in reverse order so most popular words are on top
-for i in range(-1, -50, -1):
+for i in range(-1, -100, -1):
     men_list = men_list + df.index[i] + ', '
     
 all_lists = 'Women \n \n' + women_list + '\n\n Men \n\n' + men_list
@@ -114,26 +114,28 @@ all_lists = 'Women \n \n' + women_list + '\n\n Men \n\n' + men_list
 
 # In[18]:
 
-# order top females words by 'f' column
-df_f = df.head(10)
-df_f = df_f.sort_values('f', ascending=False)
+# Save top 30 from each cat
+# women
+df.sort_values('diff', inplace=True)
+f = pd.DataFrame(df.head(30)['f'])
+f.columns = ['tfidf']
+f['label'] = 'female'
 
-# order top male words by 'm' column
-df_m = df.tail(10)
-df_m = df_m.sort_values('m', ascending=True)
+# men
+df.sort_values('diff', inplace=True, ascending=False)
+m = pd.DataFrame(df.head(30)['m'])
+m.columns = ['tfidf']
+m['label'] = 'male'
 
 
-# In[19]:
+df_sex = pd.concat([m, f], axis=0)
 
-# Create new df with top 10 features for men and top 10 features for women
-
-df_mf = df_f.append(df_m)
-df_mf.to_csv('../Assets/Tableau/faves_mf.csv')
+df_sex.to_csv('../Assets/Tableau/faves_sex.csv')
 
 
 # ### Compare word frequency for social drinkers vs. heavy drinkers vs. non drinkers
 
-# In[20]:
+# In[19]:
 
 # Compare word frequency for social drinkers vs. heavy drinkers vs. non drinkers
 
@@ -144,7 +146,7 @@ df = pd.DataFrame(ddf.iloc[:,:length].mean(axis=0), columns = ['social'])
 print time()-t0
 
 
-# In[21]:
+# In[20]:
 
 # Compute mean value of each of first length columns for non-drinkers
 t0 = time()
@@ -153,7 +155,7 @@ df['non-drinker'] = ddf.iloc[:,:length].mean(axis=0)
 print time()-t0
 
 
-# In[22]:
+# In[21]:
 
 # Compute mean value of each of first length columns for heavy drinkers
 t0 = time()
@@ -162,7 +164,7 @@ df['heavy'] = ddf.iloc[:,:length].mean(axis=0)
 print time()-t0
 
 
-# In[23]:
+# In[22]:
 
 df['avg'] = df.mean(axis=1)
 # Compute differences between social drinkers' values and other categories
@@ -171,9 +173,9 @@ df['h_diff'] = df['heavy'] - df['avg']
 df['s_diff'] = df['social'] - df['avg']
 
 
-# In[24]:
+# In[23]:
 
-# Save top 50 words for heavy, social, and non-drinkers for report
+# Save top 100 words for heavy, social, and non-drinkers for report
 # heavy drinkers:
 df.sort_values('h_diff', ascending=False, inplace=True)
 
@@ -198,7 +200,7 @@ for word in df.index[:50]:
 all_lists = all_lists +  '\n\nDrink heavily \n \n' +  heavy_list + '\n\nDrink socially \n\n' + social_list + '\n\nDo not drink regularly \n\n'+ non_list
 
 
-# In[25]:
+# In[24]:
 
 # Save top 18 from each cat
 # non-drinkers first
@@ -226,18 +228,18 @@ df_drinks.to_csv('../Assets/Tableau/faves_drinks.csv')
 
 # ### Explore word choice by age
 
-# In[26]:
+# In[25]:
 
 from matplotlib import pyplot as plt
 
-# In[27]:
+# In[26]:
 
 plt.hist(okc.age, 50, normed=1, facecolor='green', alpha=0.75)
 plt.axis([15, 80, 0, .1])
 plt.show
 
 
-# In[28]:
+# In[27]:
 
 # Compare under 30 to over 30
 
@@ -252,7 +254,7 @@ def age_encoder(age):
 tf.Xage = tf.Xage.apply(age_encoder)
 
 
-# In[29]:
+# In[28]:
 
 # Compare word frequency for under 30 vs. over 30
 
@@ -268,15 +270,15 @@ df['<30'] = ydf.iloc[:,:length].mean(axis=0)
 print time()-t0
 
 
-# In[30]:
+# In[29]:
 
 df['diff'] = df['>30']-df['<30']
 df.sort_values('diff', inplace=True)
 
 
-# In[31]:
+# In[30]:
 
-# Save top 50 words for people under and over 30
+# Save top 100 words for people under and over 30
 # older people:
 df.sort_values('diff', ascending=False, inplace=True)
 
@@ -287,13 +289,13 @@ for word in df.index[:50]:
 # younger people
 younger_list = ''
 # Write older_list in reverse order so most popular words are on top
-for i in range(-1, -50, -1):
+for i in range(-1, -100, -1):
     younger_list = younger_list + df.index[i] + ', '
     
 all_lists = all_lists + '\n\nOver 30 \n \n' + older_list + '\n\nUnder 30 \n\n' + younger_list
 
 
-# In[32]:
+# In[31]:
 
 # Save top 30 from each cat
 # n.b terms younger and older are strictly relative
@@ -319,7 +321,7 @@ df_age.to_csv('../Assets/Tableau/faves_age.csv')
 # ### Compare drug users and non-users
 # exclude those who don't report
 
-# In[33]:
+# In[32]:
 
 def drug_encoder(drugs):
     if drugs == 'never':
@@ -332,7 +334,7 @@ def drug_encoder(drugs):
 tf.Xdrugs = tf.Xdrugs.apply(drug_encoder)
 
 
-# In[34]:
+# In[33]:
 
 # Compute mean value of each of first length columns for drug users
 t0 = time()
@@ -346,15 +348,15 @@ df['non-users'] = ydf.iloc[:,:length].mean(axis=0)
 print time()-t0
 
 
-# In[35]:
+# In[34]:
 
 df['diff'] = df['users']-df['non-users']
 df.sort_values('diff', inplace=True)
 
 
-# In[36]:
+# In[35]:
 
-# Save top 50 words for users and non-users
+# Save top 100 words for users and non-users
 # users:
 df.sort_values('diff', ascending=False, inplace=True)
 
@@ -365,44 +367,51 @@ for word in df.index[:50]:
 # non-users
 user_list = ''
 # Write older_list in reverse order so most popular words are on top
-for i in range(-1, -50, -1):
+for i in range(-1, -100, -1):
     user_list = user_list + df.index[i] + ', '
     
-all_lists = all_lists + '\n\nUse drugs \n \n' + non_user_list + '\n\nDo not use drugs \n\n' + user_list
+all_lists = all_lists + '\n\nUse drugs \n \n' + user_list + '\n\nDo not use drugs \n\n' + non_user_list
 
 
-# In[37]:
+# In[36]:
 
-# Create new df with top 10 features for users and nonusers
+# Save top 30 from each cat
+# non-users
 
-df_users = df.head(10)
-df_users = df_users.sort_values('users', ascending=False)
+n = pd.DataFrame(df.head(30)['non-users'])
+n.columns = ['tfidf']
+n['label'] = 'non-users'
 
-df_non = df.tail(10)
-df_non = df_non.sort_values('non-users')
+# users
 
-df_drugs = pd.concat([df_users, df_non], axis=0)
+m = pd.DataFrame(df.tail(30)['users'])
+m.columns = ['tfidf']
+m['label'] = 'users'
+
+
+df_drugs = pd.concat([m, n], axis=0)
+
 df_drugs.to_csv('../Assets/Tableau/faves_drugs.csv')
 
 
 # ### Explore Income
 
-# In[38]:
+# In[37]:
 
 plt.hist(tf.Xincome[tf.Xincome != -1], 50, normed=1, facecolor='green', alpha=0.75)
 plt.show
 
 
-# In[39]:
+# In[38]:
 
-# Divide income income into <50k, 50-50k, >50k
+# Divide income income into <50k, 50-100k, >100k
 
 def income_encoder(income):
     if income == -1:
         return -1
     elif income <= 50000:
         return 0
-    elif income <= 50000:
+    elif income <= 100000:
         return 1
     else:
         return 2
@@ -410,7 +419,7 @@ def income_encoder(income):
 tf.Xincome = tf.Xincome.apply(income_encoder)
 
 
-# In[40]:
+# In[39]:
 
 # Compare word frequency for different income levels
 
@@ -423,24 +432,24 @@ print time()-t0
 # Compute mean value of each of first length columns for middle income
 t0 = time()
 mdf = tf[tf.Xincome==1]
-df['50-50k'] = mdf.iloc[:,:length].mean(axis=0)
+df['50-100k'] = mdf.iloc[:,:length].mean(axis=0)
 print time()-t0
 
 # Compute mean value of each of first length columns for highest income
 t0 = time()
 rdf = tf[tf.Xincome==2]
-df['>50k'] = rdf.iloc[:,:length].mean(axis=0)
+df['>100k'] = rdf.iloc[:,:length].mean(axis=0)
 print time()-t0
 
 
 # Compute differences between each income category and overall average
 df['avg'] = df.mean(axis=1)
-df['r_diff'] = df['>50k'] - df['avg']
+df['r_diff'] = df['>100k'] - df['avg']
 df['p_diff'] = df['<50k'] - df['avg']
-df['m_diff'] = df['50-50k'] - df['avg']
+df['m_diff'] = df['50-100k'] - df['avg']
 
 
-# In[41]:
+# In[40]:
 
 # Save lists for each income bracket
 
@@ -462,7 +471,12 @@ lower_list = ''
 for word in df.index[:50]:
     lower_list = lower_list + word + ', '
 
-all_lists = all_lists + '\n\nMake over 50k annually \n \n' + upper_list + '\n\nMake 50-50k annually\n\n' + mid_list+ '\n\nMake less than 50k annually'+lower_list
+all_lists = all_lists + '\n\nMake over 100k annually \n \n' + upper_list + '\n\nMake 50-100k annually\n\n' + mid_list+ '\n\nMake less than 50k annually\n\n'+lower_list
+
+
+# In[41]:
+
+print all_lists
 
 
 # In[42]:
@@ -470,15 +484,15 @@ all_lists = all_lists + '\n\nMake over 50k annually \n \n' + upper_list + '\n\nM
 # Save top 18 from each cat
 # richest first
 df.sort_values('r_diff', inplace=True, ascending=False)
-df2 = pd.DataFrame(df.head(18)['>50k'])
+df2 = pd.DataFrame(df.head(18)['>100k'])
 df2.columns = ['tfidf']
-df2['label'] = '> 50k'
+df2['label'] = '> 100k'
 
 # middle income
 df.sort_values('m_diff', inplace=True, ascending=False)
-df3 = pd.DataFrame(df.head(18)['50-50k'])
+df3 = pd.DataFrame(df.head(18)['50-100k'])
 df3.columns = ['tfidf']
-df3['label'] = '50 - 50k'
+df3['label'] = '50 - 100k'
 
 # lower income
 df.sort_values('p_diff', inplace=True, ascending=False)
@@ -551,14 +565,14 @@ df.sort_values('diff', inplace=True)
 
 # In[47]:
 
-# Save top 50 words for cats and dogs for report
+# Save top 100 words for cats and dogs for report
 cat_list = ''
 for word in df.index[:50]:
     cat_list = cat_list + word + ', '
     
 dog_list = ''
 # Write dog_list in reverse order so most popular words are on top
-for i in range(-1, -50, -1):
+for i in range(-1, -100, -1):
     dog_list = dog_list + df.index[i] + ', '
     
 all_lists = all_lists + '\n\nLike cats\n \n' + cat_list + '\n\nLike dogs \n\n' + dog_list
@@ -566,15 +580,23 @@ all_lists = all_lists + '\n\nLike cats\n \n' + cat_list + '\n\nLike dogs \n\n' +
 
 # In[48]:
 
-# Sort top 10 values for cats
-df_cats = df.head(10).sort_values('cats')
+# Save top 30 from each cat
+# cats
 
-# Sort top 10 values for dogs
-df_dogs = df.tail(10).sort_values('dogs', ascending=False)
+n = pd.DataFrame(df.head(30)['cats'])
+n.columns = ['tfidf']
+n['label'] = 'cats'
 
-# Save df pets
-df_pets = pd.concat([df_dogs, df_cats], axis=0)
-df_pets.to_csv('../Assets/Tableau/faves_ed.csv')
+# men
+
+m = pd.DataFrame(df.tail(30)['dogs'])
+m.columns = ['tfidf']
+m['label'] = 'dogs'
+
+
+df_drugs = pd.concat([m, n], axis=0)
+
+df_drugs.to_csv('../Assets/Tableau/faves_pets.csv')
 
 
 # ### Explore word choice by education
@@ -618,17 +640,17 @@ print time()-t0
 df['diff'] = df['grad'] - df['non-grad']
 df.sort_values('diff', inplace=True)
 
-# Save top 50 words for grads and non-grads for report
+# Save top 100 words for grads and non-grads for report
 non_grad_list = ''
 for word in df.index[:50]:
     non_grad_list = non_grad_list + word + ', '
     
 grad_list = ''
 # Write grad_list in reverse order so most popular words are on top
-for i in range(-1, -50, -1):
+for i in range(-1, -100, -1):
     grad_list = grad_list + df.index[i] + ', '
 
-# Save top 50's lists to all_lists
+# Save top 100's lists to all_lists
 all_lists =  all_lists + '\n\nGraduated College\n \n' + grad_list + '\n\nDid Not Graduate College\n\n' + non_grad_list
 
 # Save top 30 from each cat
@@ -695,7 +717,7 @@ for ethnicity in groups:
 
 # In[53]:
 
-# List top 50 words for each ethnicity
+# List top 100 words for each ethnicity
 
 
 # Fill string for each ethnicity with top words
@@ -779,11 +801,11 @@ for job in tf.Xjob.value_counts()[1:11].index:
     
 
     # sort by job
-    # save top 50 words asfor each job
+    # save top 100 words asfor each job
     # save top 6 words with tfidf scores and labels to df_jobs
     job_list = ''
     df.sort_values('%s_diff' %job, ascending=False, inplace=True)
-    # save top 50 words to reserved string in job_dic
+    # save top 100 words to reserved string in job_dic
     for word in df.index[:50]:
         job_list = job_list + word + ', '
     
@@ -909,7 +931,7 @@ df['avg'] = df.mean(axis=1)
 for religion in religions:
     df['%s_diff' %religion] = df[religion] -df['avg']
 
-    # Save top 50 words for each religion as string
+    # Save top 100 words for each religion as string
     df.sort_values('%s_diff' % religion, inplace=True, ascending=False)
     
     rel_list = ''
@@ -968,7 +990,7 @@ for level in levels:
     # sort by diff for each category
     df['%s_diff' %level] = df[level] - df['avg']
     df.sort_values('%s_diff' % level, inplace=True, ascending=False)
-    # Save top 50 to level_dic
+    # Save top 100 to level_dic
     level_list = ''
     for word in df.index[:50]:
         level_list = level_list + word + ', '
@@ -1029,7 +1051,7 @@ for diet in diets:
     # sort by diff for each category
     df['%s_diff' %diet] = df[diet] - df['avg']
     df.sort_values('%s_diff' % diet, inplace=True, ascending=False)
-    # Save top 50 to level_dic
+    # Save top 100 to level_dic
     diet_list = ''
     for word in df.index[:50]:
         diet_list = diet_list + word + ', '
@@ -1045,7 +1067,7 @@ for diet in diets:
 df_diet.to_csv('../Assets/Tableau/faves_diet.csv')
 
 
-# In[68]:
+# In[65]:
 
 # save all_lists to file ../Assets/Tableau/faves_all_lists.txt
 
@@ -1061,7 +1083,7 @@ target.close()
 # write script to save dicts to text file
 
 
-# List top 50 lists here:
+# List top 100 lists here:
 # 
 # 
 
