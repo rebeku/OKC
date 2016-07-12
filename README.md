@@ -2,7 +2,7 @@
 
 In this repository is various code written to derive insight about the tastes, values, preferences and recreational activities of users of the online dating website OKCupid.  Specifically, we analyze a set of almost 60,000 profiles from the San Francisco Bay area that was released in 2012.
 
-Feel free to visit INSERT URL HERE to view the Tableau Dashboard with some of the findings from this project.
+Feel free to visit https://public.tableau.com/profile/rebecca.eve.cohen#!/vizhome/okc_final3_0/Main to view the Tableau Dashboard with some of the findings from this project.
 
 Unfortunately, the .csv files are too large for me to post on github.  To reproduce the work for this project, take the following steps:
 
