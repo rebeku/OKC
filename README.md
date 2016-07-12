@@ -35,4 +35,4 @@ https://github.com/rudeboybert/JSE_OkCupid/blob/master/profiles.csv.zip
 
 13) Run custom_word_finder.ipynb to analyze user essays and compute stats for those users who mention any word in the English language.
 
-14) I may be adding files for machine learning models to predict categorical information about users based on their essay text.  Please watch for updates.
+14) I will be adding files for machine learning models to predict more categorical information about users based on their essay text.  Please watch for updates.
