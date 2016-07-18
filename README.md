@@ -13,22 +13,26 @@ https://github.com/rudeboybert/JSE_OkCupid/blob/master/profiles.csv.zip
 
 3) Run code/Feature_Processing.ipynb to perform some preliminary processing on essay texts.
 
-4) Run faves.ipynb to analyze user essays and extract titles and counts of popular books, bands, movies, television shows, and food, and save them to a new .csv file.
+4) View Optimizing_gender_classifier.ipynb to view my process for selecting and tuning models to classify the writer's gender based on essay text.  The strongest model acheived 95% accuracy during testing.
 
-5) Run code/Feature_importance_efficienter.ipynb to analyze word frequency for different demographic groups.
+5) Stay tuned for machine learning models on other interesting features.
 
-6) Convert Feature_importance_efficienter.ipynb to .py file using the following command
+6) Run faves.ipynb to analyze user essays and extract titles and counts of popular books, bands, movies, television shows, and food, and save them to a new .csv file.
+
+7) Run code/Feature_importance_efficienter.ipynb to analyze word frequency for different demographic groups.
+
+8) Convert Feature_importance_efficienter.ipynb to .py file using the following command
 ```jupyter nbconvert --to python Feature_importance_efficienter.ipynb```
 
-7) Automatically generate code to analyze faves.csv by running code/faves_code_generation.ipynb
+9) Automatically generate code to analyze faves.csv by running code/faves_code_generation.ipynb
 
-8) Run faves.py (created in step 7) in your terminal
+10) Run faves.py (created in step 7) in your terminal
 ```python faves.py```
 
-9) Run correlations_by_feature.ipynb to save some exploratory data analysis on the relationships between categoricals in the dataset
+11) Run correlations_by_feature.ipynb to save some exploratory data analysis on the relationships between categoricals in the dataset
 
-10) You have now saved all files used to analyze data for the Tableau Dashboard.
+12) You have now saved all files used to analyze data for the Tableau Dashboard.
 
-11) Run custom_word_finder.ipynb to analyze user essays and compute stats for those users who mention any word in the English language.
+13) Run custom_word_finder.ipynb to analyze user essays and compute stats for those users who mention any word in the English language.
 
-12) I may be adding files for machine learning models to predict categorical information about users based on their essay text.  Please watch for updates.
+14) I will be adding files for machine learning models to predict more categorical information about users based on their essay text.  Please watch for updates.
